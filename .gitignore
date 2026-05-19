@@ -1,6 +1,21 @@
+# Zure taldekideak gehitu zituen jada
 mosquitto/data/
 mosquitto/log/
-
 *.log
 *.db
 
+# Hauek nik gehitzeko esan dizut:
+wisdm-dataset/
+flink-jars/*.jar
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
