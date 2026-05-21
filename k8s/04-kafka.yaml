@@ -24,6 +24,8 @@ spec:
               value: "zookeeper:2181"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
+            - name: KAFKA_CFG_BROKER_ID
+              value: "1"
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://:9092"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
@@ -38,8 +40,6 @@ spec:
               value: "1"
             - name: KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR
               value: "1"
-            - name: KAFKA_KRAFT_CLUSTER_ID
-              value: "no"
 ---
 apiVersion: v1
 kind: Service
