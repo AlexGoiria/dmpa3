@@ -2,34 +2,20 @@ import time
 import json
 import paho.mqtt.client as mqtt
 
-# MQTT konexioa
 client = mqtt.Client()
-client.connect("localhost", 1883)
+client.connect("20.19.224.211", 1883)
+client.loop_start()
 
-# rootpath 
-rootpath = "wisdm-dataset/"
-file_path = rootpath + "WISDM_ar_v1.1_raw.txt"
-
+file_path = "wisdm-dataset/WISDM_ar_v1.1_raw.txt"
 WAIT_TIME = 0.2
 MAX_LINES = 100000
 
-i = 0
-
 with open(file_path, "r") as f:
-
-    while True:
-        line = f.readline()
-
-        if not line:
+    for i, line in enumerate(f):
+        if i >= MAX_LINES:
             break
-
         try:
             line = line.split(",")
-
-            # limpieza del dataset WISDM
-            if len(line) < 6:
-                continue
-
             msg = {
                 "usid": line[0],
                 "action": line[1],
@@ -38,15 +24,12 @@ with open(file_path, "r") as f:
                 "y": line[4],
                 "z": line[5].replace(";", "").replace("\n", "")
             }
-
-            # MQTT-ra bidali
             client.publish("smart", json.dumps(msg))
-
+            print(msg)
             time.sleep(WAIT_TIME)
-
-            i += 1
-            if i > MAX_LINES:
-                break
-
-        except:
+        except Exception as e:
+            print(f"Errorea: {e}")
             continue
+
+client.loop_stop()
+client.disconnect()
